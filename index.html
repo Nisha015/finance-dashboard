@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Finance Dashboard</title>
+
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          boxShadow: {
+            soft: "0 8px 24px rgba(0,0,0,0.08)",
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Chart.js (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased">
+  <!-- Header -->
+  <header class="sticky top-0 z-20 border-b border-slate-200/60 bg-[var(--bg)]/80 backdrop-blur dark:border-slate-800/60">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
+      <div class="flex items-center gap-3">
+        <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-500">💰</div>
+        <h1 class="text-xl font-bold tracking-tight">Personal Finance Dashboard</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="themeToggle" class="btn btn-ghost" title="Toggle dark / light">
+          <span class="hidden sm:inline">Theme</span>
+          <span id="themeIcon" aria-hidden="true">🌙</span>
+        </button>
+        <button id="addBtn" class="btn btn-primary">➕ Add Transaction</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-6">
+    <!-- Summary Section -->
+    <section class="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="card rounded-2xl p-5">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-[var(--muted)]">Total Income</p>
+          <span class="badge bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300">Income</span>
+        </div>
+        <p id="totalIncome" class="mt-2 text-2xl font-bold">₹0</p>
+      </div>
+      <div class="card rounded-2xl p-5">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-[var(--muted)]">Total Expense</p>
+          <span class="badge bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">Expense</span>
+        </div>
+        <p id="totalExpense" class="mt-2 text-2xl font-bold">₹0</p>
+      </div>
+      <div class="card rounded-2xl p-5">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-[var(--muted)]">Balance</p>
+          <span class="badge bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">Net</span>
+        </div>
+        <p id="balance" class="mt-2 text-2xl font-bold">₹0</p>
+      </div>
+    </section>
+
+    <div class="flex gap-2 mt-4">
+  <button id="exportBtn" class="px-4 py-2 bg-green-500 text-white rounded-lg">⬇️ Export JSON</button>
+  <button id="importBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg">⬆️ Import JSON</button>
+  <input type="file" id="importFile" accept=".json" class="hidden" />
+  
+  <button id="csvBtn" class="px-4 py-2 bg-yellow-500 text-white rounded-lg">📊 Export CSV</button>
+</div>
+
+
+    <!-- Filters -->
+    <section class="mb-6 card rounded-2xl p-4">
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div>
+          <label class="mb-1 block text-sm text-[var(--muted)]">From</label>
+          <input type="date" id="filterFrom" class="input" />
+        </div>
+        <div>
+          <label class="mb-1 block text-sm text-[var(--muted)]">To</label>
+          <input type="date" id="filterTo" class="input" />
+        </div>
+        <div>
+          <label class="mb-1 block text-sm text-[var(--muted)]">Category</label>
+          <select id="filterCategory" class="select">
+            <option value="all">All</option>
+          </select>
+        </div>
+        <div class="lg:col-span-2">
+          <label class="mb-1 block text-sm text-[var(--muted)]">Search notes</label>
+          <input type="text" id="filterQuery" placeholder="e.g., grocery, uber, rent" class="input" />
+        </div>
+      </div>
+      <div class="mt-4 flex flex-wrap items-center gap-2">
+        <button id="resetFilters" class="btn btn-ghost">Reset Filters</button>
+      </div>
+    </section>
+
+    <!-- Transactions & Charts -->
+    <section class="grid gap-6 lg:grid-cols-12">
+      <!-- Transactions Table -->
+      <div class="lg:col-span-7 card rounded-2xl p-4">
+        <div class="mb-3 flex items-center justify-between">
+          <h2 class="text-lg font-semibold">Transactions</h2>
+        </div>
+        <div class="overflow-auto">
+          <table class="min-w-full text-sm">
+            <thead class="sticky top-0 bg-[var(--card)] text-left text-[var(--muted)]">
+              <tr>
+                <th class="px-3 py-2">Type</th>
+                <th class="px-3 py-2">Amount</th>
+                <th class="px-3 py-2">Category</th>
+                <th class="px-3 py-2">Date</th>
+                <th class="px-3 py-2">Notes</th>
+                <th class="px-3 py-2 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="txBody"></tbody>
+          </table>
+          <div id="emptyState" class="hidden py-10 text-center text-[var(--muted)]">
+            No transactions yet. Click <span class="font-semibold">“Add Transaction”</span> to get started.
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="lg:col-span-5 space-y-6">
+        <div class="card rounded-2xl p-4">
+          <div class="mb-3 flex items-center justify-between">
+            <h3 class="font-semibold">Expense by Category</h3>
+          </div>
+          <div class="h-[280px]">
+            <canvas id="pieChart"></canvas>
+          </div>
+        </div>
+        <div class="card rounded-2xl p-4">
+          <div class="mb-3 flex items-center justify-between">
+            <h3 class="font-semibold">Monthly Spending</h3>
+          </div>
+          <div class="h-[280px]">
+            <canvas id="barChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/40 p-4">
+    <div class="w-full max-w-lg rounded-2xl bg-[var(--card)] p-5">
+      <div class="mb-4 flex items-start justify-between">
+        <h3 id="modalTitle" class="text-lg font-semibold">Add Transaction</h3>
+        <button id="closeModal" class="btn btn-ghost">✕</button>
+      </div>
+
+      <form id="txForm" class="grid gap-4">
+        <input type="hidden" id="txId" />
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="mb-1 block text-sm text-[var(--muted)]">Type</label>
+            <div class="flex gap-2">
+              <label class="flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 dark:border-slate-700">
+                <input type="radio" name="txType" value="expense" checked />
+                <span>Expense</span>
+              </label>
+              <label class="flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 dark:border-slate-700">
+                <input type="radio" name="txType" value="income" />
+                <span>Income</span>
+              </label>
+            </div>
+          </div>
+          <div>
+            <label for="amount" class="mb-1 block text-sm text-[var(--muted)]">Amount</label>
+            <input id="amount" type="number" step="0.01" min="0" class="input" placeholder="0.00" required />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="category" class="mb-1 block text-sm text-[var(--muted)]">Category</label>
+            <select id="category" class="select" required></select>
+          </div>
+          <div>
+            <label for="date" class="mb-1 block text-sm text-[var(--muted)]">Date</label>
+            <input id="date" type="date" class="input" required />
+          </div>
+        </div>
+
+        <div>
+          <label for="notes" class="mb-1 block text-sm text-[var(--muted)]">Notes</label>
+          <textarea id="notes" rows="2" class="textarea" placeholder="Optional note"></textarea>
+        </div>
+
+        <div class="mt-2 flex items-center justify-end gap-2">
+          <button type="button" class="btn btn-ghost" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS Logic -->
+  <script src="js/app.js"></script>
+    <!-- Footer -->
+  <footer class="text-center py-4 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+    <p> Designed & Developed by <b>Nisha Barnwal</b></p> 
+  </footer>
+</body>
+</html>
+
+</body>
+</html>
