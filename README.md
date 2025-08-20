@@ -37,12 +37,13 @@ It helps you **track income, expenses, balance, and visualize spending** with ch
 
 ### Dashboard View
 ![Dashboard Screenshot](screenshots/screenshot1.png)
+
 ![Dark Mode Screenshot](screenshots/screenshot2.png)
 
 ---
 
 ## 📂 Project Structure
-finance-dashboard/
+```finance-dashboard/
 ├── index.html
 ├── css/
 │   └── style.css
@@ -54,7 +55,7 @@ finance-dashboard/
 ├── screenshots/
 │   ├── screenshot1.png
 │   └── screenshot2.png
-└── README.md
+└── README.md```
 
 ---
 
