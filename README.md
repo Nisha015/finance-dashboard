@@ -43,7 +43,7 @@ It helps you **track income, expenses, balance, and visualize spending** with ch
 ---
 
 ## 📂 Project Structure
-```finance-dashboard/
+---finance-dashboard/
 ├── index.html
 ├── css/
 │   └── style.css
@@ -55,10 +55,9 @@ It helps you **track income, expenses, balance, and visualize spending** with ch
 ├── screenshots/
 │   ├── screenshot1.png
 │   └── screenshot2.png
-└── README.md```
+└── README.md---
 
 ---
-
 
 ## ⚡ How to Use
 1. Clone the repository:
