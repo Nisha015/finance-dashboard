@@ -3,13 +3,13 @@
 A simple **Personal Finance Dashboard** built with HTML, CSS (Tailwind), and JavaScript.  
 It helps you **track income, expenses, balance, and visualize spending** with charts.  
 
-🔗 **Live Demo**: [Finance Dashboard](https://your-username.github.io/finance-dashboard/)
+🔗 **Live Demo**: [Finance Dashboard](https://Nisha015.github.io/finance-dashboard/)
 
 ---
 
 ## 👨‍💻 Author
 - **Your Name Here**  
-- GitHub: [@your-username](https://github.com/your-username)
+- GitHub: [@Nisha015](https://github.com/Nisha015)
 
 ---
 
@@ -36,26 +36,37 @@ It helps you **track income, expenses, balance, and visualize spending** with ch
 ## 📸 Screenshots
 
 ### Dashboard View
-![Dashboard Screenshot](assets/screenshot 1.png)
+![Dashboard Screenshot](assets/screenshot1.png)
 
 ### Dark Mode
-![Dark Mode Screenshot](assets/screenshot 2.png)
-
+![Dark Mode Screenshot](assets/screenshot2.png)
 ---
 
 ## 📂 Project Structure
 finance-dashboard/
 │── index.html
-│── /css
+│
+├── css/
 │ └── style.css
-│── /js
+│
+├── js/
 │ └── app.js
-│── /assets
-│ └── screenshots
+│
+├── assets/
+│ ├── icons/
+│ ├── images/
+│ └── screenshots/
+│ ├── screenshot1.png
+│ └── screenshot2.png
+│
+└── README.md
+---
+
+
 ## ⚡ How to Use
 1. Clone the repository:
    ```bash
    git clone https://github.com/Nisha015/finance-dashboard.git
-Open index.html in your browser.
+
 
 Start adding your transactions 🚀
