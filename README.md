@@ -8,7 +8,7 @@ It helps you **track income, expenses, balance, and visualize spending** with ch
 ---
 
 ## 👨‍💻 Author
-- **Your Name Here**  
+- **Nisha Barnwal**  
 - GitHub: [@Nisha015](https://github.com/Nisha015)
 
 ---
@@ -36,30 +36,26 @@ It helps you **track income, expenses, balance, and visualize spending** with ch
 ## 📸 Screenshots
 
 ### Dashboard View
-![Dashboard Screenshot](assets/screenshot1.png)
+![Dashboard Screenshot](screenshots/screenshot1.png)
+![Dark Mode Screenshot](screenshots/screenshot2.png)
 
-### Dark Mode
-![Dark Mode Screenshot](assets/screenshot2.png)
 ---
 
 ## 📂 Project Structure
 finance-dashboard/
-│── index.html
-│
+├── index.html
 ├── css/
-│ └── style.css
-│
+│   └── style.css
 ├── js/
-│ └── app.js
-│
+│   └── app.js
 ├── assets/
-│ ├── icons/
-│ ├── images/
-│ └── screenshots/
-│ ├── screenshot1.png
-│ └── screenshot2.png
-│
+│   ├── icons/
+│   └── images/
+├── screenshots/
+│   ├── screenshot1.png
+│   └── screenshot2.png
 └── README.md
+
 ---
 
 
