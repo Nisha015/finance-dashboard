@@ -69,3 +69,8 @@ finance-dashboard/
 2. Open index.html in your browser
 
 3. Start adding your transactions 🚀
+
+## ⭐ Show your support
+
+If you like this project, give it a ⭐ on 
+- GitHub: [@Nisha015](https://github.com/Nisha015)
