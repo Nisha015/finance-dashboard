@@ -66,5 +66,6 @@ finance-dashboard/
    ```bash
    git clone https://github.com/Nisha015/finance-dashboard.git
 
+2. Open index.html in your browser
 
-Start adding your transactions 🚀
+3. Start adding your transactions 🚀
