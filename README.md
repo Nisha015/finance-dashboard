@@ -43,19 +43,21 @@ It helps you **track income, expenses, balance, and visualize spending** with ch
 ---
 
 ## 📂 Project Structure
----finance-dashboard/
-├── index.html
-├── css/
-│   └── style.css
-├── js/
-│   └── app.js
-├── assets/
-│   ├── icons/
-│   └── images/
-├── screenshots/
-│   ├── screenshot1.png
-│   └── screenshot2.png
-└── README.md---
+## 📂 Project Structure
+
+finance-dashboard/  
+├── index.html  
+├── css/  
+│   └── style.css  
+├── js/  
+│   └── app.js  
+├── assets/  
+│   ├── icons/  
+│   └── images/  
+├── screenshots/  
+│   ├── screenshot1.png  
+│   └── screenshot2.png  
+└── README.md
 
 ---
 
